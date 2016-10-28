@@ -1,19 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @article.title %>
-</p>
-
-<p>
-  <strong>Content:</strong>
-  <%= @article.content %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @article.user %>
-</p>
-
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Back', articles_path %>
+  <div class="container">
+    <h1><%= @article.title %></h1>
+    By <%= @article.user.username %> on <%= @article.created_at.strftime("%b %d, %Y") %>
+    <br><br><br>
+    <div class="justify-text">
+      <span class="article-content"><%= @article.content %></span>
+    </div>
+    <div class="comments-section">
+      <%= form_tag('/comments', :method => :post) do %>
+        <%= text_field_tag :content %>
+        <%= hidden_field_tag :article_id, @article.id %>
+        <%= hidden_field_tag :user_id, 1 %>
+        <%= submit_tag "Post" %>
+      <% end %>
+      <div class="comments-list">
+        <% @comments.each do |comment| %>
+          <%= comment.content %>
+        <% end %>
+      </div>
+    </div>
+  </div>
