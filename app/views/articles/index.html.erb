@@ -19,9 +19,13 @@
               </div>
               <div class="card-action">
                 <%= link_to article_path(article.id) do %>
-                    <i class="material-icons">forums</i>
+                    <i class="material-icons">comment</i>
+                    <%= article.comments.size %>
                 <% end %>
-                <a href="#"><i class="material-icons">favorite_border</i></a>
+                <a href="#">
+                  <i class="material-icons">favorite_border</i>
+                  0 <!-- TODO: REPLACE W/ ACTUAL LIKE COUNT -->
+                </a>
               </div>
             </div>
           </div>
