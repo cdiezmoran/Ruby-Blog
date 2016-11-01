@@ -63,3 +63,10 @@
   transition: color 0.3s ease-in;
   color: #69F0AE;
 }
+
+.content-p {
+  max-height: 180px;
+  white-space: pre-line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

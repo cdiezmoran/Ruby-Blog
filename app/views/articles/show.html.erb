@@ -14,10 +14,19 @@
         <i class="material-icons">comment</i>
         <%= @article.comments.size %>
       </span>
-      <a href="#" class="like-icon">
-        <i class="material-icons">favorite_border</i>
-        0 <!-- TODO: REPLACE W/ ACTUAL LIKE COUNT -->
-      </a>
+      <% if is_logged_in? %>
+        <%= form_for(Like.new) do %>
+          <%= hidden_field_tag :user_id, current_user.id %>
+          <%= hidden_field_tag :article_id, @article.id %>
+          <%= submit_tag "favorite" %>
+          <%= @article.likes.size %>
+        <% end %>
+      <% else %>
+        <a href="/login">
+          <i class="material-icons">favorite_border</i>
+          <%= @article.likes.size %>
+        </a>
+      <% end %>
     </div>
   </div>
 </div>
@@ -29,16 +38,18 @@
         <div class="col s12">
           <h4 style="color: rgba(160,160,160,0.5);">Comments:</h4>
           <div class="card-divider"></div>
-          <div class="card comment-form">
-            <div class="card-content">
-              <%= form_for(Comment.new) do %>
-              <%= text_field_tag :content %>
-              <%= hidden_field_tag :article_id, @article.id %>
-              <%= hidden_field_tag :user_id, 1 %>
-              <%= submit_tag "Submit", class: "button button-primary" %>
-              <% end %>
+          <% if is_logged_in? %>
+            <div class="card comment-form">
+              <div class="card-content">
+                <%= form_for(Comment.new) do %>
+                <%= text_field_tag :content %>
+                <%= hidden_field_tag :article_id, @article.id %>
+                <%= hidden_field_tag :user_id, current_user.id %>
+                <%= submit_tag "Submit", class: "button button-primary" %>
+                <% end %>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
       <div class="comments-list">

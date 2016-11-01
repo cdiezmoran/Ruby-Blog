@@ -25,15 +25,8 @@ class LikesController < ApplicationController
   # POST /likes.json
   def create
     @like = Like.new(like_params)
-
-    respond_to do |format|
-      if @like.save
-        format.html { redirect_to @like, notice: 'Like was successfully created.' }
-        format.json { render :show, status: :created, location: @like }
-      else
-        format.html { render :new }
-        format.json { render json: @like.errors, status: :unprocessable_entity }
-      end
+    if @like.save
+      redirect_to "/articles/#{@like.article_id}"
     end
   end
 
@@ -69,6 +62,6 @@ class LikesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def like_params
-      params.require(:like).permit(:article_id, :user_id)
+      params.permit(:article_id, :user_id)
     end
 end
